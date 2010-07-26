@@ -1,0 +1,63 @@
+---
+
+:defaults:
+ :default_sort: last_modified_on desc
+ :default_connection_class: BasePage
+ :memoize: false
+ :maxitems: 50
+ :all_site_tag: whole_site
+ :all_site_exceptions:
+  - whole_site
+
+:categories:
+- &all !ruby/object:FeedCategory
+  title: All RSS Feeds
+  order: 1
+- &notices !ruby/object:FeedCategory
+  title: Notices, Messaging and Bulletins
+  order: 2
+
+:column_sets:
+- &standard_columns
+  text: bp.id, bp.action_parameters,bp.collage_asset_type, bp.collage_asset_type as item_title, bp.action_parameters + ' ' + bp.collage_asset_type as item_description, cd.filesize as filesize, bp.last_modified_on, bp.url
+- &mktinfo_columns
+  text: type, name as item_title, '' as item_description, filesize as filesize, last_modified_on, url
+:sources:
+- &standard_source
+  text: base_pages bp left outer join core_datas cd on cd.id=bp.core_data_id
+- &mktinfo_source
+  text: vw_mktinfos
+  
+:definitions:
+- &offer !ruby/object:FeedDefinition
+  category: *notices
+  name: offer
+  title: Offer Dispatched – Daily Reports
+  link: /prices/offer/
+  description: Receive notifications of recent portfolio offer curves. 
+  count: 15
+  conditions_clause: controller = 'prices' and action = 'offer'
+  select_clause: *mktinfo_columns
+  from_clause: *mktinfo_source
+- &reserve !ruby/object:FeedDefinition
+  category: *notices
+  name: replacement_reserve
+  title: Reserve Service – Daily Reports
+  description: Receive notification of the Reserve Service daily reports 
+  link: /services/reserve/
+  count: 15
+  conditions_clause: controller = 'services' and action = 'reserve' 
+  select_clause: *mktinfo_columns
+  from_clause: *mktinfo_source
+  order_by: last_modified_on desc
+- &whole_site !ruby/object:FeedDefinition
+  category: *all
+  name: whole_site
+  title: Whole Site Content Changes
+  link: www.ercot.com
+  description: Subscribe to the 'All Content' RSS feed to receive notification of any site change
+  count: 50
+  conditions_clause: 1=1
+  select_clause: *standard_columns
+  from_clause: *standard_source
+  query_processing: select{|ws|(!(ws.url=~/.jpg|.gif|.css|.png/)) && (! (ws.item_description=~ /xref/))}.map{|ws| ws.url.gsub("www","alt") if ws.item_description =~ /Alt/;ws}

@@ -1,0 +1,101 @@
+
+Usage
+
+  rvm [Flags] [Options] Action [Implementation[,Implementation[,...]]
+
+Flags
+
+  --head        - with update, updates rvm to git head version.
+  --rubygems    - with update, updates rubygems for selected ruby
+  --default     - with ruby select, sets a default ruby for new shells.
+  --debug       - Toggle debug mode on for very verbose output.
+  --trace       - Toggle trace mode on to see EVERYTHING rvm is doing.
+  --force       - Force install, removes old install & source before install.
+  --summary     - Used with rubydo to print out a summary of the commands run.
+  --jit         - Used with rubinius install to build with JIT
+  --latest      - with gemset --dump skips version strings for latest gem.
+  --gems        - with uninstall/remove removes gems with the interpreter.
+  --reconfigure - Force ./configure on install even if Makefile already exists.
+
+
+Options
+
+  -v|--version    - Emit rvm version loaded for current shell
+  -l|--level      - patch level to use with rvm use / install
+     --prefix     - path for all rvm files (~/.rvm/), with trailing slash!
+     --bin        - path for binaries to be placed (~/.rvm/bin/)
+     --source     - src directory to use (~/.rvm/src/)
+     --archives   - directory for downladed files (~/.rvm/archives/)
+  -S              - Specify a script file to attempt to load and run (rubydo)
+  -e              - Execute code from the command line.
+  -G|--gems       - root gem path to use
+  --patch         - With MRI Rubies you may specify one or more full paths to patches
+                    for multiple, specify comma separated:
+                    --patch /.../.../a.patch,/.../.../.../b.patch
+  -C|--configure  - custom configure options. If you need to pass several configure
+                    options then append them comma separated: -C --...,--...,--...
+  --nice          - process niceness (for slow computers, default 0)
+  --ree-options   - Options passed directly to ree's './installer' on the command line.
+
+Action
+
+  * usage   - show this usage information
+  version   - show the rvm version installed in rvm_path
+  use       - setup current shell to use a specific ruby version
+  reload    - reload rvm source itself (useful after changing rvm source)
+  implode   - (seppuku) removes the rvm installation completely.
+              This means everything in $rvm_path (~/.rvm).
+              This does not touch your profiles, which is why
+              there is an if around the sourcing scripts/rvm.
+  update    - upgrades rvm to the latest version.
+              (If you experience bugs try this first with --head)
+  reset     - remove current and stored default & system settings.
+              (If you experience odd behavior try this second)
+  info      - show the *current* environment information for current ruby
+  debug     - show info plus additional information for common issues
+
+  install   - install one or many ruby versions
+              See also: http://rvm.beginrescueend.com/rubies/installing/
+  uninstall - uninstall one or many ruby versions, leaves their sources
+  remove    - uninstall one or many ruby versions and remove their sources
+
+  ruby      - runs a named ruby file against specified and/or all rubies
+  gem       - runs a gem command using selected ruby's 'gem'
+  rake      - runs a rake task against specified and/or all rubies
+  tests     - runs 'rake test' across selected ruby versions
+  specs     - runs 'rake spec' across selected ruby versions
+  monitor   - Monitor cwd for testing, run `rake {spec,test}` on changes.
+
+  gemset    - gemsets: http://rvm.beginrescueend.com/gemsets/
+
+  gemdir    - display the path to the current gem directory (GEM_HOME).
+  srcdir    - display the path to rvm source directory (may be yanked)
+
+  fetch     - Performs an archive / src fetch only of the selected ruby.
+  list      - show currently installed rubies, interactive output.
+              http://rvm.beginrescueend.com/rubies/list/
+  package   - Install a dependency package {readline,iconv,zlib,openssl}
+              http://rvm.beginrescueend.com/packages/
+  notes     - Display notes, with operating system specifics.
+
+Implementation
+
+  * ruby    - MRI/YARV Ruby (The Gold Standard) {1.8.6,1.8.7,1.9.1,1.9.2...}
+  jruby     - JRuby, Ruby interpreter on the Java Virtual Machine.
+  rbx       - Rubinius
+  ree       - Ruby Enterprise Edition, MRI Ruby with several custom
+              patches for performance, stability, and memory.
+  macruby   - MacRuby, insanely fast, can make real apps (Mac OS X Only).
+  maglev    - GemStone Ruby, awesome persistent ruby object store.
+  ironruby  - IronRuby, NOT supported yet. Looking for volunteers to help.
+  mput      - shyouhei(mput)'s github repository, popular in Japan :)
+  system    - use the system ruby (eg. pre-rvm state)
+  default   - use rvm set default ruby and system if it hasn't been set.
+              http://rvm.beginrescueend.com/rubies/default/
+
+
+Resources:
+
+  http://rvm.beginrescueend.com/
+  https://www.pivotaltracker.com/projects/26822
+

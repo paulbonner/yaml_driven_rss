@@ -1,0 +1,24 @@
+  xml.instruct! :xml, :version=>"1.0"
+  cache_xml(@feed_id) do 
+    xml.rss(:version=>"2.0"){
+      xml.channel{
+        xml.title(@feed.title)
+        xml.link(@feed.link)
+        xml.description(@feed.description)
+        xml.language('en-us')
+        xml.ttl('10')
+        for post in @feed.updates(params[:count])
+          xml.item do
+            post_date=post.last_modified_on.strftime("%b %d, %Y")
+            xml.title(post.item_title)
+            xml.description "type" => "html" do
+              xml.text! post.item_description.blank? ? post_date + ", ." + FeedDefinition.file_extension(post.url) + ", " + FeedDefinition.human_size(post.filesize) : render(:inline => post.item_description) 
+            end
+            xml.pubDate(post_date)
+            xml.link("http://www.ercot.com" + post.url.gsub(" ","%20")) 
+            xml.guid  post.url.gsub("/","__").gsub(" ","%20") + Date.parse(post_date).hash.to_s, :isPermaLink => false
+          end
+        end
+      }
+    }
+  end

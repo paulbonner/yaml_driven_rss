@@ -1,0 +1,11 @@
+Subscribe to ERCOT RSS Feeds
+<br/><br/>
+<% @feeds.each{|feed| %>
+	<br/><%=feed.title%>&nbsp;
+	<a href="http://add.my.yahoo.com/rss?url=<%=$RSS_SOURCE%>?feed=<%=feed.name.to_s%>"><img src="/images/layout/feed_yahoo.gif" width="91" height="17" title="Subscribe using MyYahoo!" alt="Subscribe using MyYahoo!" /></a> 
+	<a href="http://fusion.google.com/add?source=atgs&feedurl=<%=$RSS_SOURCE%>?feed=<%=feed.name.to_s%>" class="google"><img src="/images/layout/plus_google.gif" border="0" title="Subscribe using Google" alt="Subscribe using Google"></a> 
+	<a href="<%=$RSS_SOURCE%>?feed=<%=feed.name.to_s%>"><img src="/images/layout/feed.gif" alt="Subscribe using any RSS Reader" title="Subscribe using any RSS Reader"/></a>
+	<a href="<%=$ATOM_SOURCE%>?feed=<%=feed.name.to_s%>">Subscribe using any Atom Reader</a>
+
+<% }%>
+
