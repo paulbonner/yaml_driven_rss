@@ -1,0 +1,6 @@
+
+RSS is easy if all the feeds that you need to deliver are based on a single table or a set of tables all conforming to the same structure. It becomes a little tricker when you need to query multiple data sources with signficantly diverse models.
+
+yaml_driven_rss resolves that difficulty by providing support for delivering rss feeds based on definitions stored in a yaml configuration file. The YAML configuration provides the developer with the ability to specify data source, column set, sort order, selection criteria and post-processing code to be used to manipulate the resulting data. This lets you add and update feeds without making any changes to application code.
+
+[more detail soon]
