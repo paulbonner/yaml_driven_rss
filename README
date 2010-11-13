@@ -3,4 +3,4 @@ RSS is easy if all the feeds that you need to deliver are based on a single tabl
 
 yaml_driven_rss resolves that difficulty by providing support for delivering rss feeds based on definitions stored in a yaml configuration file. The YAML configuration provides the developer with the ability to specify data source, column set, sort order, selection criteria and post-processing code to be used to manipulate the resulting data. This lets you add and update feeds without making any changes to application code.
 
-[more detail soon]
+The example application demonstrates how to use this code. See config/feed_definitions.yml and lib/feed_definition.rb, and the test code in example/test to see how it all fits together.
